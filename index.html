@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <link href="/styles/style.css" rel="stylesheet">
+  <!-- <link href="/js/vendor/powerange.min.css" rel="stylesheet"> -->
+
+  <link rel="manifest" href="assets/manifest.json">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+</head>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+<script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+<script src="/js/vendor/bodyScrollLock.min.js"></script>
+<!-- <script src="/js/vendor/powerange.min.js"></script> -->
+
+<script src="/js/main.js"></script>
+
+
+<body scroll="no" style='margin : 0px; overflow:hidden'>
+  <a-scene id="aframe-scene" style="overflow:hidden;" vr-mode-ui="enabled: false"
+    arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;'>
+
+    <!--    ASSETS    -->
+    <a-assets>
+      <a-asset-item id="man" src="https://cdn.glitch.com/783cb467-760e-406a-86b2-b1095da34d8d%2Fscene.gltf?v=1560260530418">
+      </a-asset-item>
+    </a-assets>
+
+
+    <a-marker type='barcode' value='0'>
+      <a-entity id="mangroup" scale="0.4 0.4 0.4" gltf-model="#man" modify-materials></a-entity>
+
+    </a-marker>
+
+
+
+
+
+
+    <!-- add a simple camera plus crosshairs -->
+    <a-entity camera>
+      <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1"
+        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.025" material="color: yellow; shader: flat">
+      </a-entity>
+    </a-entity>
+  </a-scene>
+
+
+
+  <div id="gui">
+
+
+    <div class="container">
+
+      <div class="range-slider">
+        <!-- <span id="rs-bullet" class="rs-label">0</span> -->
+        <input id="rs-range-line" class="rs-range" type="range" value="0" min="0" max="100" oninput="handleSlider()">
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="button-group">
+
+    <button id="x-butt">
+      X
+    </button>
+    <button id="y-butt">
+      Y
+    </button>
+  </div>
+
+  </div>
+
+  <script src="/js/clickevents.js"></script>
+
+
+</body>
+
+</html>

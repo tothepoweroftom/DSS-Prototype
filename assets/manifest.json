@@ -1,0 +1,21 @@
+{ 
+
+  "name": "DSS", 
+
+  "short_name": "DSS", 
+
+  "start_url": "https://onyx-property.glitch.me", 
+
+  "display": "standalone", 
+
+  "icons": [{ 
+
+    "src": "https://cdn.glitch.com/fc096d69-0f63-4ab7-861c-e9e1861c17f8%2Fdss.jpg?v=1560171759167", 
+
+    "sizes": "192x192", 
+
+    "type": "image/png" 
+
+  }] 
+
+} 
