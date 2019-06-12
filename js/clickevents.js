@@ -6,13 +6,23 @@ let sliderBuffer = [];
 let questions = {
   southeast: {
     1: "How many experience",
-    2: " ",
+    2: "social exclusion?",
     3: " "
   },
   newwest: {
     1: "How many teens ",
     2: "between 15 and 16 years old",
     3: " work out often?"
+  },
+  east: {
+    1: "How many of them",
+    2: "have fallen twice or more",
+    3: "in the past year?"
+  },
+  south: {
+    1: "How many of them are",
+    2: "satisfied with the green",
+    3: "spaces in their neighbourhood?"
   },
   north: {
     1: "How many adults ",
@@ -41,8 +51,8 @@ AFRAME.registerComponent('cursor-listener', {
       console.log('I was clicked at: ', evt.detail.intersection.point);
       let id = evt.target.id
 
-
-
+      // $('#rs-range-slider').val(0);
+      setSlider();
 
       switch (id) {
         case "0":
@@ -64,7 +74,7 @@ AFRAME.registerComponent('cursor-listener', {
           break;
         case "2":
           document.getElementById('livingIn').setAttribute('text-geometry', {
-            value: 'Living in New-East'
+            value: 'Living in New-West'
           })
           document.getElementById('question1').setAttribute('text-geometry', {
             value: questions.newwest[1]
@@ -77,7 +87,18 @@ AFRAME.registerComponent('cursor-listener', {
           })
           break;
         case "3":
-
+          document.getElementById('livingIn').setAttribute('text-geometry', {
+            value: 'Living in South'
+          })
+          document.getElementById('question1').setAttribute('text-geometry', {
+            value: questions.south[1]
+          })
+          document.getElementById('question2').setAttribute('text-geometry', {
+            value: questions.south[2]
+          })
+          document.getElementById('question3').setAttribute('text-geometry', {
+            value: questions.south[3]
+          })
           break;
         case "4":
           document.getElementById('livingIn').setAttribute('text-geometry', {
@@ -105,6 +126,20 @@ AFRAME.registerComponent('cursor-listener', {
           })
           document.getElementById('question3').setAttribute('text-geometry', {
             value: questions.north[3]
+          })
+          break;
+        case "5":
+          document.getElementById('livingIn').setAttribute('text-geometry', {
+            value: 'Living in East'
+          })
+          document.getElementById('question1').setAttribute('text-geometry', {
+            value: questions.east[1]
+          })
+          document.getElementById('question2').setAttribute('text-geometry', {
+            value: questions.east[2]
+          })
+          document.getElementById('question3').setAttribute('text-geometry', {
+            value: questions.east[3]
           })
           break;
         default:
@@ -135,6 +170,20 @@ function handleSlider() {
 
 }
 
+function setSlider() {
+
+
+
+
+  for (let i = 0; i < 100; i++) {
+
+
+      globalManRef[i].material.emissive.set('blue');
+
+    
+  } // globalManRef[100-i].material.emissive.set('blue')
+
+}
 
 
 function getAverageDirection(elmt) {

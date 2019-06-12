@@ -31,19 +31,19 @@
     <!--    ASSETS    -->
     <a-assets>
       <!-- FONT -->
-      <a-asset-item id="optimerBoldFont" src="https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-asset-item>
+      <a-asset-item id="helv" src="assets/lato.json"></a-asset-item>
       <a-asset-item id="man" src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Fman_graph.gltf?v=1560329073236">
       </a-asset-item>
     </a-assets>
 
 
     <a-marker type='barcode' value='0'>
-      <a-entity id="numPeople" position="0.3 3.5 0" material="color: black" text-geometry="value: 100 Adults;" scale="2 2 1"></a-entity>
-      <a-entity id="livingIn" position="3 3 0" material="color: black" text-geometry="value: Living in South-East;" scale="0.6 0.6 1"></a-entity>
+      <a-entity id="numPeople" position="0.3 3.2 0" material="color: black" text-geometry="font: #helv; value: 100 Adults;" scale="2 2 1"></a-entity>
+      <a-entity id="livingIn" position="0.5 2.5 0" material="color: black" text-geometry="font: #helv; value: Living in South-East;" scale="0.6 0.6 1"></a-entity>
 
-      <a-entity id="question1" position="0.5 1.5 0" material="color: black" scale="0.5 0.5 1" text-geometry="value: How many adults"></a-entity>
-      <a-entity id="question2" position="0.5 1.0 0" material="color: black" scale="0.5 0.5 1" text-geometry="value: experience moderate or"></a-entity>
-      <a-entity id="question3" position="0.5 0.5 0" material="color: black" scale="0.5 0.5 1" text-geometry="value: severe loneliness?"></a-entity>
+      <a-entity id="question1" position="0.5 1.5 0" material="color: black" scale="0.5 0.5 1" text-geometry="font: #helv; value: How many adults"></a-entity>
+      <a-entity id="question2" position="0.5 1.0 0" material="color: black" scale="0.5 0.5 1" text-geometry="font: #helv; value: experience moderate or"></a-entity>
+      <a-entity id="question3" position="0.5 0.5 0" material="color: black" scale="0.5 0.5 1" text-geometry="font: #helv; value: severe loneliness?"></a-entity>
 
       <a-entity id="mangroup" position="-1 0 0" scale="0.3 0.3 0.3" gltf-model="#man" visible="true" modify-materials="1"></a-entity>
     </a-marker>
