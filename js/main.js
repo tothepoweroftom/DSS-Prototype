@@ -1,5 +1,8 @@
 let globalManRef = {};
-let globalManState = [];
+let globalManState = {};
+let globalID = -1;
+let prevID = -1;
+
 
 // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav). 
 const targetElement = document.querySelector("body");
@@ -18,6 +21,8 @@ function init() {
     simpleSheet: true
   })
   bodyScrollLock.disableBodyScroll(targetElement);
+
+  $('#gui').hide();
 
 
   setTimeout(function () {
@@ -87,10 +92,14 @@ window.addEventListener("orientationchange", () => {
 
 
 AFRAME.registerComponent('modify-materials', {
+  schema: {default: 0}, 
   init: function () {
     this.el.object3D.userData.ref = [];
 
     let localRef = {};
+    let localManState = [];
+
+    console.log(this.data)
     // Wait for model to load.
     this.el.addEventListener('model-loaded', () => {
 
@@ -99,24 +108,67 @@ AFRAME.registerComponent('modify-materials', {
       const obj = this.el.getObject3D('mesh');
       // Go over the submeshes and modify materials we want.
       let groups = {};
-      obj.children.forEach((element, index) => {
-        let groupIndex = element.name[element.name.length - 1];
+      let sceneEl = document.querySelector('a-scene')
+      let els = sceneEl.querySelectorAll('a-marker');
+      for (var i = 0; i < els.length; i++) {
+        console.log(i)
+        let localManState = [];
+        let localRef = {};
+        let clone = obj.clone();
+        clone.children.forEach((element, index) => {
+          let groupIndex = element.name[element.name.length - 1];
+          if (groupIndex >= 0) {
+            groups[groupIndex] = element;
+            element.children.forEach((mesh, index) => {
+              let meshIndex = mesh.name[mesh.name.length - 1];
+              if (meshIndex >= 0) {
+                let numIndex = 10 * parseInt(groupIndex) + parseInt(meshIndex);
 
-        if (groupIndex >= 0) {
-          groups[groupIndex] = element;
-          element.children.forEach((mesh, index) => {
-            let meshIndex = mesh.name[mesh.name.length - 1];
-            if (meshIndex >= 0) {
-              let numIndex = 10 * parseInt(groupIndex) + parseInt(meshIndex);
+
+                localRef[numIndex] = mesh;
+                localManState[numIndex] = false;
+              }
+            })
+          }
+        })
+        $('.loading').fadeOut();
+
+        globalManRef[i] = localRef;
+        globalManState[i] = localManState;
+
+        var el = document.createElement('a-entity');
+        el.object3D = clone;
+        el.setAttribute('visible', false);
+        el.setAttribute('scale', "0.5 0.5 0.5");
+        el.setAttribute('position', "0 1 0");
+
+        els[i].appendChild(el);
+      }
 
 
-              globalManRef[numIndex] = mesh;
-              globalManState[numIndex] = false;
-            }
-          })
-        }
-      })
 
+      // obj.children.forEach((element, index) => {
+      //   let groupIndex = element.name[element.name.length - 1];
+
+      //   if (groupIndex >= 0) {
+      //     groups[groupIndex] = element;
+      //     element.children.forEach((mesh, index) => {
+      //       let meshIndex = mesh.name[mesh.name.length - 1];
+      //       if (meshIndex >= 0) {
+      //         let numIndex = 10 * parseInt(groupIndex) + parseInt(meshIndex);
+
+
+      //         localRef[numIndex] = mesh;
+      //         localManState[numIndex] = false;
+      //       }
+      //     })
+      //   }
+      // })
+
+
+
+      // globalManRef[this.data] = localRef;
+      // globalManState[this.data] = localManState;
       // console.log(globalManRef)
     });
 
