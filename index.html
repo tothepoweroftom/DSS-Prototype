@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 <head>
-  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+
   <link href="/styles/style.css" rel="stylesheet">
   <!-- <link href="/js/vendor/powerange.min.css" rel="stylesheet"> -->
 
@@ -17,6 +18,8 @@
 <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
 <script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
 <script src="/js/vendor/bodyScrollLock.min.js"></script>
+<script src="/js/vendor/tabletop.min.js"></script>
+
 <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script> 
 
 <!-- <script src="/js/vendor/powerange.min.js"></script> -->
@@ -24,8 +27,8 @@
 <script src="/js/main.js"></script>
 
 
-<body scroll="no" style='margin : 0px; overflow:hidden'>
-  <a-scene id="aframe-scene" style="overflow:hidden;" vr-mode-ui="enabled: false"
+<body >
+  <a-scene id="aframe-scene" style="overflow:hidden;" vr-mode-ui="enabled: false" 
     arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;'>
 
     <!--    ASSETS    -->
@@ -100,13 +103,17 @@
   <div class="button-group">
 
     <button id="x-butt">
-      X
+      i
     </button>
-    <button id="y-butt">
+    <!-- <button id="y-butt">
       Y
-    </button>
+    </button> -->
   </div>
 
+  </div>
+
+  <div id="mobile-portrait">
+    <h3 id="portrait-text" style="height: 200px; width: 200px; margin: 200px auto;">This experience only works in landscape mode, please rotate your device to start</h3>
   </div>
 
   <script src="/js/clickevents.js"></script>

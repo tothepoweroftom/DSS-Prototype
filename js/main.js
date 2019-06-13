@@ -1,12 +1,86 @@
-const targetElement = document.querySelector("#aframe-scene");
-
 let globalManRef = {};
 let globalManState = [];
 
+// 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav). 
+const targetElement = document.querySelector("body");
+
 // 2. ...in some event handler after showing the target element...disable body scroll
-bodyScrollLock.disableBodyScroll(targetElement);
 
 
+
+
+var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1Pxpuoz8DglBbYWpyB9rXbIVAKvkhcC9j913MBdMjJAw/edit?usp=sharing';
+
+function init() {
+  Tabletop.init({
+    key: publicSpreadsheetUrl,
+    callback: showInfo,
+    simpleSheet: true
+  })
+  bodyScrollLock.disableBodyScroll(targetElement);
+
+
+  setTimeout(function () {
+    // Hide the address bar!
+    window.scrollTo(0, 1)
+  }, 100);
+
+
+
+  // check if in portrait
+  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  if (w < 500) {
+    $('#portrait-text').html("This experience only works in portrait mode");
+
+    if (h > w) {
+      $('#mobile-portrait').hide();
+    } else {
+      $('#mobile-portrait').show();
+
+    }
+
+  } else {
+    if (h > w) {
+      $('#mobile-portrait').show();
+    } else {
+      $('#mobile-portrait').hide();
+
+    }
+  }
+
+
+}
+
+function showInfo(data, tabletop) {
+  console.log(data);
+}
+
+
+window.addEventListener('DOMContentLoaded', init)
+window.addEventListener("orientationchange", () => {
+  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  if (w < 500) {
+    if (window.orientation === 0) {
+      $('#mobile-portrait').hide();
+
+    } else {
+      $('#mobile-portrait').show();
+
+    }
+  } else {
+    if (window.orientation === 0) {
+      $('#mobile-portrait').show();
+
+    } else {
+      $('#mobile-portrait').hide();
+
+    }
+  }
+
+
+}, false);
 AFRAME.registerComponent('modify-materials', {
   init: function () {
     this.el.object3D.userData.ref = [];
@@ -28,11 +102,11 @@ AFRAME.registerComponent('modify-materials', {
           element.children.forEach((mesh, index) => {
             let meshIndex = mesh.name[mesh.name.length - 1];
             if (meshIndex >= 0) {
-                let numIndex = 10*parseInt(groupIndex) + parseInt(meshIndex);
+              let numIndex = 10 * parseInt(groupIndex) + parseInt(meshIndex);
 
 
-                globalManRef[numIndex] = mesh;
-                globalManState[numIndex] = false;
+              globalManRef[numIndex] = mesh;
+              globalManState[numIndex] = false;
             }
           })
         }
@@ -43,4 +117,3 @@ AFRAME.registerComponent('modify-materials', {
 
   }
 });
-

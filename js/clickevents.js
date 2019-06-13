@@ -218,16 +218,10 @@ $('#rs-range-line').change(function () {
 
 
 $('#x-butt').on('click touchstart', function () {
-  let sphere = document.getElementById('test');
-  sphere.setAttribute('material', {
-    color: 'red'
-  })
+  
 
 })
 
 $('#y-butt').on('click touchstart', function () {
-  let sphere = document.getElementById('test');
-  sphere.setAttribute('material', {
-    color: 'blue'
-  })
+
 })
