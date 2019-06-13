@@ -156,6 +156,8 @@ function handleSlider() {
 
   let value = $('#rs-range-line').val();
   $('#rs-bullet').html(value + '%');
+  $('#rs-bullet').css({'color': `hsla(${173+value}, 100%, 50%, 1)`})
+  $('.rs-range').css({'background': `hsla(${173+value}, 100%, 50%, 1)`})
 
   for (let i = 0; i < 100; i++) {
 
@@ -178,6 +180,12 @@ function handleSlider() {
     }
 
   } // globalManRef[100-i].material.emissive.set('blue')
+
+}
+
+function handleTouchEnd(event) {
+  // alert(event)
+
 
 }
 
@@ -218,7 +226,7 @@ $('#rs-range-line').change(function () {
 
 
 $('#x-butt').on('click touchstart', function () {
-  
+
 
 })
 

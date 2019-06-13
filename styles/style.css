@@ -68,8 +68,8 @@ button {
   position: relative;
   display: inline-block;
   /* top: 150%; */
-  top: 50vh;
-  left: -180px;
+  top: 45vh;
+  left: -150px;
   /* transform: translate(-50%, -50%); */
   padding-bottom: 20px;
   z-index: 123123123;
@@ -93,6 +93,7 @@ button {
   margin-top: 0px;
   width: 52vh;
   -webkit-appearance: none;
+  background: black;
 }
 
 .rs-range:focus {
@@ -104,7 +105,7 @@ button {
   height: 1px;
   cursor: pointer;
   box-shadow: none;
-  background: #2e2e2e;
+  background: inherit ;
   border-radius: 0px;
   border: 0px solid #010101;
 }
@@ -126,7 +127,7 @@ button {
   height: 42px;
   width: 22px;
   border-radius: 22px;
-  background: white;
+  background: #ffbf00;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -20px;
@@ -166,7 +167,7 @@ button {
   box-sizing: border-box;
   /* border: 1px solid #fff; */
   margin-top: 20px;
-  margin-left: 29px;
+  margin-left: 50px;
   color: #fff;
   font-style: normal;
   font-weight: normal;

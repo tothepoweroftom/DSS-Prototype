@@ -81,6 +81,11 @@ window.addEventListener("orientationchange", () => {
 
 
 }, false);
+
+
+
+
+
 AFRAME.registerComponent('modify-materials', {
   init: function () {
     this.el.object3D.userData.ref = [];
