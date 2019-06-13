@@ -155,15 +155,26 @@ function handleSlider() {
 
 
   let value = $('#rs-range-line').val();
-  console.log(value)
+  $('#rs-bullet').html(value + '%');
 
   for (let i = 0; i < 100; i++) {
 
     if (i <= value) {
-      globalManRef[i].material.emissive.set('red');
-    } else {
-      globalManRef[i].material.emissive.set('blue');
 
+      // if not already true - to save DOM calls - ie Entire dom has to be rerendered 
+      if (globalManState[i] != true) {
+        globalManRef[i].material.emissive.set('red');
+        globalManState[i] = true
+
+      }
+    } else {
+
+      if (globalManState[i] != false) {
+
+        globalManRef[i].material.emissive.set('blue');
+        globalManState[i] = false
+
+      }
     }
 
   } // globalManRef[100-i].material.emissive.set('blue')
@@ -178,9 +189,10 @@ function setSlider() {
   for (let i = 0; i < 100; i++) {
 
 
-      globalManRef[i].material.emissive.set('blue');
+    globalManRef[i].material.emissive.set('blue');
+    globalManState[i] = false;
 
-    
+
   } // globalManRef[100-i].material.emissive.set('blue')
 
 }

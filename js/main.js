@@ -1,6 +1,7 @@
 const targetElement = document.querySelector("#aframe-scene");
 
 let globalManRef = {};
+let globalManState = [];
 
 // 2. ...in some event handler after showing the target element...disable body scroll
 bodyScrollLock.disableBodyScroll(targetElement);
@@ -30,8 +31,8 @@ AFRAME.registerComponent('modify-materials', {
                 let numIndex = 10*parseInt(groupIndex) + parseInt(meshIndex);
 
 
-                console.log(groupIndex, meshIndex, numIndex)
                 globalManRef[numIndex] = mesh;
+                globalManState[numIndex] = false;
             }
           })
         }
