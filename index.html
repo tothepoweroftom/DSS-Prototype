@@ -35,6 +35,8 @@
 
 
   <div class="loading">
+
+    <h2> Loading... </h2>
     <div class="loading-animation">
       <img src="assets/491.gif" />
       <!-- <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
@@ -61,22 +63,11 @@
       <a-asset-item id="man"
         src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Fman_graph.gltf?v=1560329073236">
       </a-asset-item>
+      <a-asset-item id="single-line" src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Fsinglelineman.gltf?v=1560513661319"></a-asset-item>
     </a-assets>
 
     <!-- DUMMY QUESTION ENTITY -->
     <a-entity id="question-entity-1" visible="false">
-      <a-entity id="numPeople" position="0.3 3.2 0" material="color: black"
-        text-geometry="font: #helv; value: 100 Adults;" scale="2 2 1"></a-entity>
-      <a-entity id="livingIn" position="0.5 2.5 0" material="color: black"
-        text-geometry="font: #helv; value: Living in South-East;" scale="0.6 0.6 1"></a-entity>
-
-      <a-entity id="question1" position="0.5 1.5 0" material="color: black" scale="0.5 0.5 1"
-        text-geometry="font: #helv; value: How many adults"></a-entity>
-      <a-entity id="question2" position="0.5 1.0 0" material="color: black" scale="0.5 0.5 1"
-        text-geometry="font: #helv; value: experience moderate or"></a-entity>
-      <a-entity id="question3" position="0.5 0.5 0" material="color: black" scale="0.5 0.5 1"
-        text-geometry="font: #helv; value: severe loneliness?"></a-entity>
-
       <a-entity id="mangroup" position="-1 0 0" scale="0.3 0.3 0.3" gltf-model="#man" visible="true"
         modify-materials="1"></a-entity>
 
@@ -87,7 +78,7 @@
 
     <a-marker id="marker-0" type='barcode' value='0'>
       <a-sphere id="0" color="yellow" radius="0.5" cursor-listener position="0 0 0"></a-sphere>
-
+      <!-- <a-entity position="-1 0 0" scale="0.3 0.3 0.3" gltf-model="#single-line" visible="true" oneman-graph></a-entity> -->
 
     </a-marker>
 
@@ -124,9 +115,13 @@
     </a-entity>
   </a-scene>
 
+  <div id="show-submitted">
+      <h1 id="show-submitted-text">Answer submitted!</h1>
 
+  </div>
 
   <div id="gui">
+
 
     <div class="bullet">
  

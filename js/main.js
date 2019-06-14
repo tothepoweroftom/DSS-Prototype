@@ -4,6 +4,67 @@ let globalID = -1;
 let prevID = -1;
 
 
+
+let questions = {
+  southeast: {
+    title: "100 Adults",
+    where: "Living in South East",
+    line1: "How many experience",
+    line2: "social exclusion?",
+    line3: " "
+  },
+  newwest: {
+    title: "100 Teens",
+    subtitle: "(between 15 and 16 years old)",
+    where: "Living in New-West",
+    line1: "How many teens ",
+    line2: "work out often?",
+    line3: ""
+  },
+  east: {
+    title: "100 Adults",
+
+    where: "Living in East",
+
+    line1: "How many of them",
+    line2: "have fallen twice or more",
+    line3: "in the past year?"
+  },
+  south: {
+    title: "100 Adults",
+
+    where: "Living in South",
+    line1: "How many of them are",
+    line2: "satisfied with the green",
+    line3: "spaces in their neighbourhood?"
+  },
+  north: {
+    title: "100 Adults",
+
+    where: "Living in North",
+    line1: "How many adults ",
+    line2: "experience moderate or",
+    line3: " severe loneliness?"
+  },
+  west: {
+    title: "100 Adults",
+
+    where: "Living in West",
+    line1: "How many adults ",
+    line2: "have had unprotected sex?",
+    line3: ""
+  },
+}
+
+let map2Index = {
+  0: questions.north,
+  1: questions.south,
+  2: questions.east,
+  3: questions.west,
+  4: questions.newwest,
+  5: questions.southeast
+}
+
 // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav). 
 const targetElement = document.querySelector("body");
 const targetElement2 = document.querySelector(".container");
@@ -25,7 +86,7 @@ function init() {
   bodyScrollLock.disableBodyScroll(targetElement2);
 
   $('#gui').hide();
-
+  $('#show-submitted-text').fadeOut()
 
   setTimeout(function () {
     // Hide the address bar!
@@ -37,24 +98,16 @@ function init() {
   // check if in portrait
   var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
   var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  if (w < 500) {
-    $('#portrait-text').html("This experience only works in portrait mode");
 
-    if (h > w) {
-      $('#mobile-portrait').hide();
-    } else {
-      $('#mobile-portrait').show();
-
-    }
+  if (h > w) {
+    $('#mobile-portrait').show();
+    $('#gui').hide();
 
   } else {
-    if (h > w) {
-      $('#mobile-portrait').show();
-    } else {
-      $('#mobile-portrait').hide();
+    $('#mobile-portrait').hide();
 
-    }
   }
+  
 
 
 }
@@ -68,28 +121,43 @@ window.addEventListener('DOMContentLoaded', init)
 window.addEventListener("orientationchange", () => {
   var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
   var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  if (w < 500) {
-    if (window.orientation === 0) {
-      $('#mobile-portrait').hide();
 
-    } else {
-      $('#mobile-portrait').show();
+  if (window.orientation === 0) {
+    $('#mobile-portrait').show();
+    $('#gui').hide();
 
-    }
   } else {
-    if (window.orientation === 0) {
-      $('#mobile-portrait').show();
+    $('#mobile-portrait').hide();
 
-    } else {
-      $('#mobile-portrait').hide();
-
-    }
   }
+  
 
 
 }, false);
 
+AFRAME.registerComponent('oneman-graph', {
+  schema: {
+    message: {type: 'string', default: 'Hello, World!'},
+    color: {type: 'color', default: '#aa0000'},
+    index: {type: 'number', default: 1},
+ 
+  }, 
+  init: function () {
+    this.el.addEventListener('model-loaded', () => {
 
+
+    })
+  },
+  update: function () {
+    console.log(this.data);
+    const obj = this.el.getObject3D('mesh');
+    obj.children.forEach((element, index) => {
+      if(index < this.data) {
+        element.setAttribute("color", this.data.color);
+      }
+    })
+  }
+});
 
 
 
@@ -100,6 +168,8 @@ AFRAME.registerComponent('modify-materials', {
 
     let localRef = {};
     let localManState = [];
+
+   
 
     console.log(this.data)
     // Wait for model to load.
@@ -142,9 +212,13 @@ AFRAME.registerComponent('modify-materials', {
         el.object3D = clone;
         el.setAttribute('visible', false);
         el.setAttribute('scale', "0.5 0.5 0.5");
-        el.setAttribute('position', "0 1 0");
+        el.setAttribute('position', "-1 1 0");
+
+        createText(i, el);
+
 
         els[i].appendChild(el);
+
       }
 
 
@@ -176,3 +250,61 @@ AFRAME.registerComponent('modify-materials', {
 
   }
 });
+
+
+function createText(i, el) {
+  let children = [];
+  var title = document.createElement('a-entity');
+  title.setAttribute('scale', "1.5 1.5 1");
+  title.setAttribute('color', "black");
+
+  title.setAttribute('position', "0.3 3.2 0");
+  title.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].title});
+  el.appendChild(title);
+
+  if(map2Index[i].subtitle) {
+    var subtitle = document.createElement('a-entity');
+    subtitle.setAttribute('scale', "1.2 1.2 1");
+    subtitle.setAttribute('color', "black");
+
+    subtitle.setAttribute('position', "0.3 2.8 0");
+    subtitle.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].subtitle});
+    el.appendChild(subtitle);
+
+  }
+
+  var where = document.createElement('a-entity');
+  // title.setAttribute('scale', "0 0.5 0.5");
+  where.setAttribute('color', "black");
+
+  where.setAttribute('position', "0.3 2.5 0");
+  where.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].where});
+  el.appendChild(where);
+
+  var line1 = document.createElement('a-entity');
+  // line1.setAttribute('scale', "0 0.5 0.5");
+  line1.setAttribute('position', "0.3 1.5 0");
+  line1.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line1});
+  line1.setAttribute('color', "black");
+
+  el.appendChild(line1);
+
+  var line2 = document.createElement('a-entity');
+  // line2.setAttribute('scale', "0 0.5 0.5");
+  line2.setAttribute('position', "0.3 1.0 0");
+  line2.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line2});
+  line2.setAttribute('color', "black");
+
+  el.appendChild(line2);
+
+  var line3 = document.createElement('a-entity');
+  // line3.setAttribute('scale', "0 0.5 0.5");
+  line3.setAttribute('position', "0.3 0.5 0");
+  line3.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line3});
+  line3.setAttribute('color', "black");
+
+  el.appendChild(line3);
+
+
+  return children
+}

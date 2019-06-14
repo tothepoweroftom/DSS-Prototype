@@ -3,38 +3,7 @@
 let sliderBuffer = [];
 
 
-let questions = {
-  southeast: {
-    1: "How many experience",
-    2: "social exclusion?",
-    3: " "
-  },
-  newwest: {
-    1: "How many teens ",
-    2: "between 15 and 16 years old",
-    3: " work out often?"
-  },
-  east: {
-    1: "How many of them",
-    2: "have fallen twice or more",
-    3: "in the past year?"
-  },
-  south: {
-    1: "How many of them are",
-    2: "satisfied with the green",
-    3: "spaces in their neighbourhood?"
-  },
-  north: {
-    1: "How many adults ",
-    2: "experience moderate or",
-    3: " severe loneliness?"
-  },
-  west: {
-    1: "How many adults ",
-    2: "have had unprotected sex?",
-    3: ""
-  },
-}
+
 AFRAME.registerComponent('cursor-listener', {
   init: function () {
     var lastIndex = -1;
@@ -55,16 +24,16 @@ AFRAME.registerComponent('cursor-listener', {
       let id = evt.target.id
       globalID = id;
 
-      console.log(document.getElementById('marker-'+globalID).children)
       document.getElementById('marker-'+globalID).children[1].setAttribute('visible', true);
+      setSlider();
+      prevID = globalID
 
 
-      if(prevID != -1) {
+      if(prevID != -1 && globalID!=prevID) {
         document.getElementById('marker-'+prevID).children[1].setAttribute('visible', false);
 
+
       }
-      prevID = globalID
-      setSlider();
 
 
     });
@@ -110,9 +79,13 @@ function handleTouchEnd(event) {
 
   $('#submit').fadeIn();
   setTimeout(() => {
-    alert("Answer submitted");
+
+    $('#show-submitted-text').fadeIn().delay(2000).fadeOut();
+
     $('#submit').fadeOut();
     setSlider();
+    document.getElementById('marker-'+globalID).children[1].setAttribute('visible', false);
+
 
   }, 3000);
 
@@ -122,6 +95,9 @@ function handleTouchEnd(event) {
 function setSlider() {
   $('#rs-range-line').val(0);
   $('#rs-bullet').html('0%');
+  $('#rs-bullet').css({'color': `rgb(255,255,255)`})
+
+
 
   $('#gui').fadeIn();
   // $('.loader').fdeOut();
