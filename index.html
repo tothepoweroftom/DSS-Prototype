@@ -5,6 +5,8 @@
     content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
 
   <link href="/styles/style.css" rel="stylesheet">
+  <link href="/styles/loader.css" rel="stylesheet">
+
   <!-- <link href="/js/vendor/powerange.min.css" rel="stylesheet"> -->
 
   <link rel="manifest" href="assets/manifest.json">
@@ -49,7 +51,7 @@
     </div>
   </div>
 
-  <a-scene id="aframe-scene" style="overflow:hidden;" vr-mode-ui="enabled: false"
+  <a-scene id="aframe-scene" style="overflow:hidden;" vr-mode-ui="enabled: false" embedded
     arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;'>
 
     <!--    ASSETS    -->
@@ -125,8 +127,13 @@
 
 
   <div id="gui">
-    <span id="rs-bullet" class="rs-label">0%</span>
 
+    <div class="bullet">
+ 
+        <div id="submit" class="loader">
+        </div>
+        <span id="rs-bullet" class="rs-label">0%</span>
+    </div>
 
     <div class="container">
 
@@ -142,11 +149,9 @@
   <div class="button-group">
 
     <button id="x-butt">
-      i
+      <img src="assets/information.png"/>
     </button>
-    <!-- <button id="y-butt">
-      Y
-    </button> -->
+
   </div>
 
   </div>

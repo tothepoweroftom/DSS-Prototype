@@ -38,6 +38,8 @@ let questions = {
 AFRAME.registerComponent('cursor-listener', {
   init: function () {
     var lastIndex = -1;
+    $('#submit').fadeOut();
+
 
     var COLORS = ['red', 'green', 'blue'];
     this.el.addEventListener('click', function (evt) {
@@ -76,8 +78,7 @@ function handleSlider() {
 
   let value = $('#rs-range-line').val();
   $('#rs-bullet').html(value + '%');
-  $('#rs-bullet').css({'color': `hsla(${173+value}, 100%, 50%, 1)`})
-  $('.rs-range').css({'background': `hsla(${173+value}, 100%, 50%, 1)`})
+  // $('.rs-range').css({'background': `hsla(${173+value}, 100%, 50%, 1)`})
 
   for (let i = 0; i < 100; i++) {
 
@@ -105,13 +106,26 @@ function handleSlider() {
 
 function handleTouchEnd(event) {
   // alert(event)
+  $('#rs-bullet').css({'color': `hsla(${360}, 100%, 50%, 1)`})
+
+  $('#submit').fadeIn();
+  setTimeout(() => {
+    alert("Answer submitted");
+    $('#submit').fadeOut();
+    setSlider();
+
+  }, 3000);
 
 
 }
 
 function setSlider() {
   $('#rs-range-line').val(0);
+  $('#rs-bullet').html('0%');
+
   $('#gui').fadeIn();
+  // $('.loader').fdeOut();
+
 
   for (let i = 0; i < 100; i++) {
     globalManRef[globalID][i].material.emissive.set('#000948');
@@ -126,9 +140,5 @@ function setSlider() {
 
 $('#x-butt').on('click touchstart', function () {
 
-
-})
-
-$('#y-butt').on('click touchstart', function () {
 
 })

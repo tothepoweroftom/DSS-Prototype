@@ -6,6 +6,7 @@ let prevID = -1;
 
 // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav). 
 const targetElement = document.querySelector("body");
+const targetElement2 = document.querySelector(".container");
 
 // 2. ...in some event handler after showing the target element...disable body scroll
 
@@ -21,13 +22,14 @@ function init() {
     simpleSheet: true
   })
   bodyScrollLock.disableBodyScroll(targetElement);
+  bodyScrollLock.disableBodyScroll(targetElement2);
 
   $('#gui').hide();
 
 
   setTimeout(function () {
     // Hide the address bar!
-    window.scrollTo(0, 1)
+    window.scrollTo(0, 10)
   }, 100);
 
 

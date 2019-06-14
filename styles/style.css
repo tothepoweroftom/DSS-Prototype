@@ -3,10 +3,10 @@
 body,
 html {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
-  overflow: hidden;
+  /* overflow: hidden;
   position: fixed;
   left:0px;
-  top:0px;
+  top:0px; */
 }
 
 .loading {
@@ -35,39 +35,34 @@ h1 {
 }
 
 .a-body {
-  width: 100vw !important;
+  /* width: 100vw !important;
   height: 100vh !important;
   margin-left: 0px !important;
-  background: black !important;
+  background: black !important; */
 }
 
 
 #gui {
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
   position: absolute;
   top: 0px;
   left: 0px;
   z-index: 123124123;
-  background: rgba(0, 0, 0, 0);
 }
 
 .button-group {
   position: absolute;
-  right: 10px;
-  top: 60px;
+  right: 20px;
+  top: 20px;
   z-index: 12312459123;
 }
 
 button {
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  font-size: 18px;
-  font-weight: bold;
-  border: 1px solid black;
-  text-align: center;
-  color: black;
+
+  background: transparent;
+  border: 0px;
+
 }
 
 .box-minmax {
@@ -84,17 +79,19 @@ button {
 }
 
 .container {
-  padding-top: 40px;
-  position: relative;
-  display: inline-block;
-  /* top: 150%; */
-  top: 45vh;
-  left: -150px;
-  /* transform: translate(-50%, -50%); */
-  padding-bottom: 20px;
-  z-index: 123123123;
-  /* background:red; */
-  transform: rotate(-90deg)
+/* background:red; */
+transform: rotate(-90deg);
+position: absolute;
+left: -20vh;
+top: 50vh;
+}
+
+.bullet {
+  position: fixed;
+  top: 25px; 
+  left:25px;
+  height: 50px;
+  width:50px;
 }
 
 .range-slider {
@@ -111,6 +108,7 @@ button {
 
 .rs-range {
   margin-top: 0px;
+  
   width: 52vh;
   -webkit-appearance: none;
   background: black;
@@ -172,7 +170,6 @@ button {
 
 .rs-label {
   position: relative;
-  top: 25vh;
   transform-origin: center center;
   display: block;
   width: 50px;
@@ -182,17 +179,15 @@ button {
   line-height: 10px;
   text-align: center;
   font-weight: bold;
-  font-size: 10px;
-  /* margin-top: 10px; */
+  font-size: 20px;
+  margin-top: 13px;
   box-sizing: border-box;
   /* border: 1px solid #fff; */
-  margin-top: 20px;
-  margin-left: 50px;
+
   color: #fff;
   font-style: normal;
   font-weight: normal;
   line-height: normal;
-  font-size: 26px;
 }
 
 
