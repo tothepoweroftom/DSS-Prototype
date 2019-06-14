@@ -3,15 +3,26 @@ let globalManState = {};
 let globalID = -1;
 let prevID = -1;
 
+let pollData = [60, 60, 60, 60, 60, 60, 60];
+
 
 
 let questions = {
+  center: {
+    title: "100 Adults",
+    where: "Living in Centre",
+    line1: "How many of them",
+    line2: "have sound pollution complaints?",
+    line3: " ",
+    answer: 43.1,
+  },
   southeast: {
     title: "100 Adults",
     where: "Living in South East",
     line1: "How many experience",
     line2: "social exclusion?",
-    line3: " "
+    line3: " ",
+    answer: 18.3
   },
   newwest: {
     title: "100 Teens",
@@ -19,7 +30,8 @@ let questions = {
     where: "Living in New-West",
     line1: "How many teens ",
     line2: "work out often?",
-    line3: ""
+    line3: "",
+    answer: 30.5,
   },
   east: {
     title: "100 Adults",
@@ -28,7 +40,8 @@ let questions = {
 
     line1: "How many of them",
     line2: "have fallen twice or more",
-    line3: "in the past year?"
+    line3: "in the past year?",
+    answer: 18.1,
   },
   south: {
     title: "100 Adults",
@@ -36,7 +49,8 @@ let questions = {
     where: "Living in South",
     line1: "How many of them are",
     line2: "satisfied with the green",
-    line3: "spaces in their neighbourhood?"
+    line3: "spaces in their neighbourhood?",
+    answer: 90.9
   },
   north: {
     title: "100 Adults",
@@ -44,7 +58,8 @@ let questions = {
     where: "Living in North",
     line1: "How many adults ",
     line2: "experience moderate or",
-    line3: "severe loneliness?"
+    line3: "severe loneliness?",
+    answer: 51.2
   },
   west: {
     title: "100 Adults",
@@ -52,7 +67,8 @@ let questions = {
     where: "Living in West",
     line1: "How many adults ",
     line2: "have had unprotected sex?",
-    line3: ""
+    line3: "", 
+    answer: 15.0,
   },
 }
 
@@ -62,7 +78,9 @@ let map2Index = {
   2: questions.east,
   3: questions.west,
   4: questions.newwest,
-  5: questions.southeast
+  5: questions.southeast,
+  6: questions.center
+
 }
 
 // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav). 
@@ -74,14 +92,9 @@ const targetElement2 = document.querySelector(".container");
 
 
 
-var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1Pxpuoz8DglBbYWpyB9rXbIVAKvkhcC9j913MBdMjJAw/edit?usp=sharing';
 
 function init() {
-  Tabletop.init({
-    key: publicSpreadsheetUrl,
-    callback: showInfo,
-    simpleSheet: true
-  })
+
   bodyScrollLock.disableBodyScroll(targetElement);
   bodyScrollLock.disableBodyScroll(targetElement2);
 
@@ -112,9 +125,7 @@ function init() {
 
 }
 
-function showInfo(data, tabletop) {
-  console.log(data);
-}
+
 
 
 window.addEventListener('DOMContentLoaded', init)
@@ -145,19 +156,92 @@ AFRAME.registerComponent('oneman-graph', {
   init: function () {
     this.el.addEventListener('model-loaded', () => {
 
+      const obj = this.el.getObject3D('mesh');
+      // console.log(obj);
+      let groups = {};
+      let sceneEl = document.querySelector('a-scene')
+      let els = sceneEl.querySelectorAll('a-marker');
+      sceneEl.appendChild(createResultText());
+
+      // Make the entity for each marker from base
+      for (var i = 0; i < els.length; i++) {
+        var el = document.createElement('a-entity');
+        el.setAttribute('id', `result-${i}`);
+        let roundedAns = Math.floor(map2Index[i].answer/10);
+        // ---- A - Answer
+        let cloneA = document.createElement('a-entity');
+        cloneA.object3D = obj.clone();
+ 
+        cloneA.setAttribute("position", "-4 0 0");
+
+
+        // ---- B - Average
+        let cloneB = document.createElement('a-entity');
+        cloneB.object3D = obj.clone();
+        cloneB.setAttribute("position", "4 0 0");
+
+        //ADD Text:
+
+        // ADD both lines to marker
+        el.appendChild(cloneA)
+        el.appendChild(cloneB)
+        el.setAttribute('visible', false);
+        el.setAttribute('scale', "0.25 0.25 0.25");
+        els[i].appendChild(el);
+      }
+      $('.loading').delay(1000).fadeOut();
 
     })
   },
-  update: function () {
-    console.log(this.data);
-    const obj = this.el.getObject3D('mesh');
-    obj.children.forEach((element, index) => {
-      if(index < this.data) {
-        element.setAttribute("color", this.data.color);
-      }
-    })
-  }
+
 });
+
+
+function createResultText() {
+
+  let el = document.createElement('a-entity');
+  el.setAttribute('id', "result-text");
+  el.setAttribute('visible', false);
+
+
+
+    var title = document.createElement('a-entity');
+    title.setAttribute('scale', "3 3 1");
+    title.setAttribute('material', {color:'red'});
+
+    title.setAttribute('position', "-2 6.0 0");
+    title.setAttribute('id', "result-number");
+    title.setAttribute('text-geometry', {font: "#helv", value:'%'});
+    el.appendChild(title);
+
+    var subtitle = document.createElement('a-entity');
+    subtitle.setAttribute('scale', "2 2 1");
+    subtitle.setAttribute('material', {color:"#0087c1"});
+
+    subtitle.setAttribute('position', "0 4.0 0");
+    subtitle.setAttribute('text-geometry', {font: "#helv", value:"Data from GGD"});
+    el.appendChild(subtitle);
+
+    var poll = document.createElement('a-entity');
+    poll.setAttribute('scale', "3 3 1");
+    poll.setAttribute('material', {color:'#ffeb00'});
+    poll.setAttribute('id', "poll-number");
+
+    poll.setAttribute('position', "5 6.0 0");
+    poll.setAttribute('text-geometry', {font: "#helv", value:'%'});
+    el.appendChild(poll);
+
+    var subPoll = document.createElement('a-entity');
+    subPoll.setAttribute('scale', "2 2 1");
+    subPoll.setAttribute('material', {color:"#0087c1"});
+
+    subPoll.setAttribute('position', "5 4.0 0");
+    subPoll.setAttribute('text-geometry', {font: "#helv", value:"Average response from users"});
+    el.appendChild(subPoll);
+  
+  return el;
+
+}
 
 
 
@@ -171,11 +255,11 @@ AFRAME.registerComponent('modify-materials', {
 
    
 
-    console.log(this.data)
+    // console.log(this.data)
     // Wait for model to load.
     this.el.addEventListener('model-loaded', () => {
 
-      console.log("loaded model")
+      // console.log("loaded model")
       // Grab the mesh / scene.
       const obj = this.el.getObject3D('mesh');
       // Go over the submeshes and modify materials we want.
@@ -183,7 +267,7 @@ AFRAME.registerComponent('modify-materials', {
       let sceneEl = document.querySelector('a-scene')
       let els = sceneEl.querySelectorAll('a-marker');
       for (var i = 0; i < els.length; i++) {
-        console.log(i)
+        // console.log(i)
         let localManState = [];
         let localRef = {};
         let clone = obj.clone();
@@ -203,7 +287,6 @@ AFRAME.registerComponent('modify-materials', {
             })
           }
         })
-        $('.loading').fadeOut();
 
         globalManRef[i] = localRef;
         globalManState[i] = localManState;
