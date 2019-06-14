@@ -44,7 +44,7 @@ let questions = {
     where: "Living in North",
     line1: "How many adults ",
     line2: "experience moderate or",
-    line3: " severe loneliness?"
+    line3: "severe loneliness?"
   },
   west: {
     title: "100 Adults",
@@ -210,8 +210,10 @@ AFRAME.registerComponent('modify-materials', {
 
         var el = document.createElement('a-entity');
         el.object3D = clone;
+        el.setAttribute('id', `graph-${i}`);
+
         el.setAttribute('visible', false);
-        el.setAttribute('scale', "0.5 0.5 0.5");
+        el.setAttribute('scale', "0.25 0.25 0.25");
         el.setAttribute('position', "-1 1 0");
 
         createText(i, el);
@@ -255,53 +257,53 @@ AFRAME.registerComponent('modify-materials', {
 function createText(i, el) {
   let children = [];
   var title = document.createElement('a-entity');
-  title.setAttribute('scale', "1.5 1.5 1");
-  title.setAttribute('color', "black");
+  title.setAttribute('scale', "3 3 1");
+  title.setAttribute('material', {color:"black"});
 
-  title.setAttribute('position', "0.3 3.2 0");
+  title.setAttribute('position', "5 12.0 0");
   title.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].title});
   el.appendChild(title);
 
   if(map2Index[i].subtitle) {
     var subtitle = document.createElement('a-entity');
-    subtitle.setAttribute('scale', "1.2 1.2 1");
-    subtitle.setAttribute('color', "black");
+    subtitle.setAttribute('scale', "1.5 1.5 1");
+    subtitle.setAttribute('material', {color:"black"});
 
-    subtitle.setAttribute('position', "0.3 2.8 0");
+    subtitle.setAttribute('position', "5 11.0 0");
     subtitle.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].subtitle});
     el.appendChild(subtitle);
 
   }
 
   var where = document.createElement('a-entity');
-  // title.setAttribute('scale', "0 0.5 0.5");
-  where.setAttribute('color', "black");
+  where.setAttribute('scale', "2 2 2");
+  where.setAttribute('material', {color:"black"});
 
-  where.setAttribute('position', "0.3 2.5 0");
+  where.setAttribute('position', "5.5 9.0 0");
   where.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].where});
   el.appendChild(where);
 
   var line1 = document.createElement('a-entity');
-  // line1.setAttribute('scale', "0 0.5 0.5");
-  line1.setAttribute('position', "0.3 1.5 0");
+  line1.setAttribute('scale', "3 3 2");
+  line1.setAttribute('position', "5.5 5 0");
   line1.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line1});
-  line1.setAttribute('color', "black");
+  line1.setAttribute('material', {color:"black"});
 
   el.appendChild(line1);
 
   var line2 = document.createElement('a-entity');
-  // line2.setAttribute('scale', "0 0.5 0.5");
-  line2.setAttribute('position', "0.3 1.0 0");
+  line2.setAttribute('scale', "3 3 2");
+  line2.setAttribute('position', "5.5 3.0 0");
   line2.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line2});
-  line2.setAttribute('color', "black");
+  line2.setAttribute('material', {color:"black"});
 
   el.appendChild(line2);
 
   var line3 = document.createElement('a-entity');
-  // line3.setAttribute('scale', "0 0.5 0.5");
-  line3.setAttribute('position', "0.3 0.5 0");
+  line3.setAttribute('scale', "3 3 2");
+  line3.setAttribute('position', "5.5 1 0");
   line3.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line3});
-  line3.setAttribute('color', "black");
+  line3.setAttribute('material', {color:"black"});
 
   el.appendChild(line3);
 

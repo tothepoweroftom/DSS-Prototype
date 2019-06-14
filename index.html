@@ -63,7 +63,7 @@
       <a-asset-item id="man"
         src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Fman_graph.gltf?v=1560329073236">
       </a-asset-item>
-      <a-asset-item id="single-line" src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Fsinglelineman.gltf?v=1560513661319"></a-asset-item>
+      <a-asset-item id="single-man" src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Flittleman.gltf?v=1560517205048"></a-asset-item>
     </a-assets>
 
     <!-- DUMMY QUESTION ENTITY -->
@@ -78,7 +78,11 @@
 
     <a-marker id="marker-0" type='barcode' value='0'>
       <a-sphere id="0" color="yellow" radius="0.5" cursor-listener position="0 0 0"></a-sphere>
-      <!-- <a-entity position="-1 0 0" scale="0.3 0.3 0.3" gltf-model="#single-line" visible="true" oneman-graph></a-entity> -->
+      <a-entity id="line">
+          <a-entity position="-1 0 0" gltf-model="#single-man" visible="true"></a-entity>
+          <a-entity position="-1 0.003 0" gltf-model="#single-man" visible="true"></a-entity>
+  
+      </a-entity>
 
     </a-marker>
 

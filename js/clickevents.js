@@ -24,16 +24,18 @@ AFRAME.registerComponent('cursor-listener', {
       let id = evt.target.id
       globalID = id;
 
-      document.getElementById('marker-'+globalID).children[1].setAttribute('visible', true);
+      document.getElementById('marker-'+globalID).children.namedItem(`graph-${globalID}`).setAttribute('visible', true);
       setSlider();
-      prevID = globalID
 
 
       if(prevID != -1 && globalID!=prevID) {
-        document.getElementById('marker-'+prevID).children[1].setAttribute('visible', false);
+        document.getElementById('marker-'+prevID).children.namedItem(`graph-${prevID}`).setAttribute('visible', false);
 
 
       }
+
+      prevID = globalID
+
 
 
     });
@@ -84,7 +86,7 @@ function handleTouchEnd(event) {
 
     $('#submit').fadeOut();
     setSlider();
-    document.getElementById('marker-'+globalID).children[1].setAttribute('visible', false);
+    document.getElementById('marker-'+globalID).children.namedItem(`graph-${globalID}`).setAttribute('visible', false);
 
 
   }, 3000);
