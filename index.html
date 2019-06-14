@@ -63,7 +63,7 @@
       <a-asset-item id="man"
         src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Fman_graph.gltf?v=1560329073236">
       </a-asset-item>
-      <a-asset-item id="single-man" src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Fsinglelineman2.gltf?v=1560515786664"></a-asset-item>
+      <a-asset-item id="single-man" src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Flittleman.gltf?v=1560517205048"></a-asset-item>
     </a-assets>
 
     <!-- DUMMY QUESTION ENTITY -->
@@ -73,48 +73,48 @@
 
     </a-entity>
 
-    <a-entity position="-1 0 0" gltf-model="#single-man" visible="false" oneman-graph></a-entity>
 
 
 
     <a-marker id="marker-0" type='barcode' value='0'>
-      <a-sphere id="0" color="#ffbf00" radius="0.5" cursor-listener position="0 0 0"></a-sphere>
- 
+      <a-sphere id="0" color="yellow" radius="0.5" cursor-listener position="0 0 0"></a-sphere>
+      <a-entity id="line">
+          <a-entity position="-1 0 0" gltf-model="#single-man" visible="true"></a-entity>
+          <a-entity position="-1 0.003 0" gltf-model="#single-man" visible="true"></a-entity>
+  
+      </a-entity>
 
     </a-marker>
 
 
     <a-marker id="marker-1" type='barcode' value='1'>
-      <a-sphere id="1" color="#ffbf00" radius="0.5" cursor-listener position="0 0 0"></a-sphere>
+      <a-sphere id="1" color="yellow" radius="0.5" cursor-listener position="0 0 0"></a-sphere>
       <!-- <a-entity id="box" cursor-listener geometry="primitive: box" material="color: blue"></a-entity> -->
 
     </a-marker>
 
     <a-marker id="marker-2" type='barcode' value='2'>
-      <a-sphere class="icon" id="2" color="#ffbf00" radius="0.5" cursor-listener></a-sphere>
+      <a-sphere class="icon" id="2" color="yellow" radius="0.5" cursor-listener></a-sphere>
     </a-marker>
 
     <a-marker id="marker-3" type='barcode' value='3'>
-      <a-sphere class="icon" id="3" color="#ffbf00" radius="0.5" cursor-listener></a-sphere>
+      <a-sphere class="icon" id="3" color="yellow" radius="0.5" cursor-listener></a-sphere>
     </a-marker>
 
     <a-marker id="marker-4" type='barcode' value='4'>
-      <a-sphere class="icon" id="4" color="#ffbf00" radius="0.5" cursor-listener></a-sphere>
+      <a-sphere class="icon" id="4" color="yellow" radius="0.5" cursor-listener></a-sphere>
     </a-marker>
 
     <a-marker id="marker-5" type='barcode' value='5'>
-      <a-sphere class="icon" id="5" color="#ffbf00" radius="0.5" cursor-listener></a-sphere>
+      <a-sphere class="icon" id="5" color="yellow" radius="0.5" cursor-listener></a-sphere>
     </a-marker>
 
-    <a-marker id="marker-6" type='barcode' value='6'>
-        <a-sphere class="icon" id="6" color="#ffbf00" radius="0.5" cursor-listener></a-sphere>
-      </a-marker>
 
 
     <!-- add a simple camera plus crosshairs -->
     <a-entity camera>
       <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1"
-        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.022" material="color: #ffbf00; shader: flat">
+        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.022" material="color: yellow; shader: flat">
       </a-entity>
     </a-entity>
   </a-scene>

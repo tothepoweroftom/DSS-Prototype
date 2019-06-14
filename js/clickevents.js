@@ -76,20 +76,17 @@ function handleSlider() {
 }
 
 function handleTouchEnd(event) {
+  // alert(event)
   $('#rs-bullet').css({'color': `hsla(${360}, 100%, 50%, 1)`})
-  let result = document.getElementById('result-text').object3D.clone();
 
   $('#submit').fadeIn();
   setTimeout(() => {
 
-    $('#show-submitted-text').fadeIn().delay(1000).fadeOut();
+    $('#show-submitted-text').fadeIn().delay(2000).fadeOut();
 
     $('#submit').fadeOut();
     setSlider();
-
-    //Show the result, hide graph
     document.getElementById('marker-'+globalID).children.namedItem(`graph-${globalID}`).setAttribute('visible', false);
-
 
 
   }, 3000);
@@ -108,10 +105,10 @@ function setSlider() {
   // $('.loader').fdeOut();
 
 
-  // for (let i = 0; i < 100; i++) {
-  //   globalManRef[globalID][i].material.emissive.set('#000948');
+  for (let i = 0; i < 100; i++) {
+    globalManRef[globalID][i].material.emissive.set('#000948');
 
-  // }
+  }
  
 
 }
