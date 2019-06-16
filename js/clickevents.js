@@ -84,13 +84,31 @@ function handleTouchEnd(event) {
     //set the data
     $('#answer').html(`${map2Index[globalID].answer}%`)
     let answer = Math.round(map2Index[globalID].answer/10)
+
+    let average = getAverage(map2Index[globalID].location);
+    $('#average').html(`${average.toFixed(1)}%`)
+
+    let rounded = Math.round(average/10)
     for(let i=0; i<10; i++) {
       if(i<answer) {
-        $(`#man-A-${10-i}`).css({'color': '#ffe600'})
+        $(`#man-A-${i+1}`).css({'color': '#ffe600'})
+
       } else {
-        $(`#man-A-${10-i}`).css({'color': '#282864'})
+        $(`#man-A-${i+1}`).css({'color': '#282864'})
 
       }
+
+    }
+
+    for(let i=0; i<10; i++) {
+      if(i<rounded) {
+        $(`#man-B-${i+1}`).css({'color': '#cc0000'})
+
+      } else {
+        $(`#man-B-${i+1}`).css({'color': '#282864'})
+
+      }
+
     }
     document.getElementById('marker-'+globalID).children.namedItem(`graph-${globalID}`).setAttribute('visible', false);
 
@@ -102,6 +120,8 @@ function handleTouchEnd(event) {
       document.getElementById('camera').setAttribute('visible', true);
 
     }, 5000)
+
+    setData(map2Index[globalID].location, Math.round($('#rs-range-line').val()))
     $('#submit').fadeOut();
 
 
@@ -137,5 +157,57 @@ function setSlider() {
 
 $('#x-butt').on('click touchstart', function () {
 
+  $('#help').fadeIn();
+
 
 })
+
+$('#close-help').on('click touchstart', function () {
+
+  $('#help').fadeOut();
+
+
+})
+
+
+
+
+
+function setData(location, value) {
+
+  // set
+  var bodyFormData = new FormData();
+  bodyFormData.set('location', location);
+  bodyFormData.set('value', value);
+  axios({
+    method: 'post',
+    url: `${backendURL}/addpoll`,
+    data: bodyFormData,
+    config: { headers: {'Content-Type': 'multipart/form-data' }}
+    })
+    .then(function (response) {
+        //handle success
+        console.log(response);
+        results = response.data.poll;
+
+    })
+    .catch(function (response) {
+        //handle error
+        console.log(response);
+    });
+}
+
+function getAverage(location) {
+  let area = results[0][location]
+
+  let average = 0;
+  if(area.length > 1) {
+
+    
+    for(let i=0; i<area.length; i++) {
+      average+= parseInt(area[i])
+    }
+    average = average/area.length;
+  }
+  return average;
+}

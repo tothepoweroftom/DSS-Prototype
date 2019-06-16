@@ -4,6 +4,8 @@ let globalID = -1;
 let prevID = -1;
 let isActive = false;
 
+let results = {}
+
 
 let questions = {
   southeast: {
@@ -12,7 +14,8 @@ let questions = {
     line1: "How many experience",
     line2: "social exclusion?",
     line3: " ",
-    answer: 18.3
+    answer: 18.3,
+    location: "southeast"
   },
   newwest: {
     title: "100 Teens",
@@ -21,7 +24,8 @@ let questions = {
     line1: "How many teens ",
     line2: "work out often?",
     line3: "",
-    answer: 42.3
+    answer: 42.3,
+    location: "newwest"
 
   },
   east: {
@@ -32,7 +36,9 @@ let questions = {
     line1: "How many of them",
     line2: "have fallen twice or more",
     line3: "in the past year?",
-    answer: 18.1
+    answer: 18.1,
+    location: "east"
+
 
   },
   south: {
@@ -42,7 +48,9 @@ let questions = {
     line1: "How many of them are",
     line2: "satisfied with the green",
     line3: "spaces in their neighbourhood?",
-    answer: 90.9
+    answer: 90.9,
+    location: "south"
+
 
   },
   north: {
@@ -52,7 +60,8 @@ let questions = {
     line1: "How many adults ",
     line2: "experience moderate or",
     line3: "severe loneliness?",
-    answer: 51.2
+    answer: 51.2,
+    location: "north"
 
   },
   west: {
@@ -62,19 +71,21 @@ let questions = {
     line1: "How many adults ",
     line2: "have had unprotected sex?",
     line3: "",
-    answer: 15
+    answer: 15,
+    location: "west"
+
 
   },
 
-  center: {
+  centre: {
     title: "100 Adults",
-
     where: "Living in Centre",
     line1: "How many of them ",
     line2: "have had sound pollution",
     line3: "complaints?",
+    answer: 43.0,
+    location: "centre"
 
-    answer: 43.0
 
   }
 }
@@ -86,7 +97,7 @@ let map2Index = {
   3: questions.west,
   4: questions.newwest,
   5: questions.southeast,
-  6: questions.center
+  6: questions.centre
 }
 
 // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav). 
@@ -99,21 +110,40 @@ const targetElement2 = document.querySelector(".container");
 
 
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1Pxpuoz8DglBbYWpyB9rXbIVAKvkhcC9j913MBdMjJAw/edit?usp=sharing';
-
+var backendURL = 'https://imaginationofthings.pythonanywhere.com'
 function init() {
+
+
+  axios.get(`${backendURL}/getpoll`)
+  .then(function (response) {
+    // handle success
+    // console.log(response);
+
+    results = response.data.poll;
+    console.log(results[0]["centre"]);
+
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
+
+
+
 
   bodyScrollLock.disableBodyScroll(targetElement);
   bodyScrollLock.disableBodyScroll(targetElement2);
 
   $('#gui').hide();
   $('#result-overlay').hide();
+  $('#help').fadeOut();
 
   $('#show-submitted-text').fadeOut()
   $('.result-overlay').fadeOut();
-  setTimeout(function () {
-    // Hide the address bar!
-    window.scrollTo(0, 10)
-  }, 100);
+
 
 
 
@@ -133,14 +163,14 @@ function init() {
   // Create result overlay
 
   for(let i=0; i<10; i++) {
-    let man = `<li><span id="man-A-${10-i}" style="font-size: 4vh; width: 4vh; color: rgb(40,40,100);">
+    let man = `<li><span id="man-A-${10-i}" style="font-size: 5vh; width: 5vh; color: rgb(40,40,100);">
                   <i class="fas fa-male"></i>
               </span></li>`
-    let man2 = `<li><span id="man-B-${10-i}" style="font-size: 4vh; width: 4vh; color: rgb(40,40,100);">
+    let man2 = `<li><span id="man-B-${10-i}" style="font-size: 5vh; width: 5vh; color: rgb(40,40,100);">
         <i class="fas fa-male"></i>
     </span></li>`
     $('#list-1').append(man)
-    $('#list-2').append(man)
+    $('#list-2').append(man2)
 
   }
   
@@ -293,7 +323,7 @@ function createText(i, el) {
   let children = [];
   var title = document.createElement('a-entity');
   title.setAttribute('scale', "3 3 1");
-  title.setAttribute('material', {color:"black"});
+  title.setAttribute('material', {color:"#282864"});
 
   title.setAttribute('position', "5 12.0 0");
   title.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].title});
@@ -302,7 +332,7 @@ function createText(i, el) {
   if(map2Index[i].subtitle) {
     var subtitle = document.createElement('a-entity');
     subtitle.setAttribute('scale', "1.5 1.5 1");
-    subtitle.setAttribute('material', {color:"black"});
+    subtitle.setAttribute('material', {color:"#282864"});
 
     subtitle.setAttribute('position', "5 11.0 0");
     subtitle.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].subtitle});
@@ -312,7 +342,7 @@ function createText(i, el) {
 
   var where = document.createElement('a-entity');
   where.setAttribute('scale', "2 2 2");
-  where.setAttribute('material', {color:"black"});
+  where.setAttribute('material', {color:"#282864"});
 
   where.setAttribute('position', "5.5 9.0 0");
   where.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].where});
@@ -322,7 +352,7 @@ function createText(i, el) {
   line1.setAttribute('scale', "3 3 2");
   line1.setAttribute('position', "5.5 5 0");
   line1.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line1});
-  line1.setAttribute('material', {color:"black"});
+  line1.setAttribute('material', {color:"#282864"});
 
   el.appendChild(line1);
 
@@ -330,7 +360,7 @@ function createText(i, el) {
   line2.setAttribute('scale', "3 3 2");
   line2.setAttribute('position', "5.5 3.0 0");
   line2.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line2});
-  line2.setAttribute('material', {color:"black"});
+  line2.setAttribute('material', {color:"#282864"});
 
   el.appendChild(line2);
 
@@ -338,7 +368,7 @@ function createText(i, el) {
   line3.setAttribute('scale', "3 3 2");
   line3.setAttribute('position', "5.5 1 0");
   line3.setAttribute('text-geometry', {font: "#helv", value:map2Index[i].line3});
-  line3.setAttribute('material', {color:"black"});
+  line3.setAttribute('material', {color:"#282864"});
 
   el.appendChild(line3);
 
