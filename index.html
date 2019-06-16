@@ -20,6 +20,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenLite.min.js"></script>
 <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
 <script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+<script src="https://kit.fontawesome.com/916ba9b6af.js"></script>
+
 <script src="/js/vendor/bodyScrollLock.min.js"></script>
 <script src="/js/vendor/tabletop.min.js"></script>
 
@@ -60,10 +62,11 @@
     <a-assets>
       <!-- FONT -->
       <a-asset-item id="helv" src="assets/lato.json"></a-asset-item>
+
+      //3d man
       <a-asset-item id="man"
         src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Fman_graph.gltf?v=1560329073236">
       </a-asset-item>
-      <a-asset-item id="single-man" src="https://cdn.glitch.com/a2af4e06-fb43-4965-830f-2fe1cfaae6c5%2Flittleman.gltf?v=1560517205048"></a-asset-item>
     </a-assets>
 
     <!-- DUMMY QUESTION ENTITY -->
@@ -78,11 +81,7 @@
 
     <a-marker id="marker-0" type='barcode' value='0'>
       <a-sphere id="0" color="yellow" radius="0.5" cursor-listener position="0 0 0"></a-sphere>
-      <a-entity id="line">
-          <a-entity position="-1 0 0" gltf-model="#single-man" visible="true"></a-entity>
-          <a-entity position="-1 0.003 0" gltf-model="#single-man" visible="true"></a-entity>
-  
-      </a-entity>
+
 
     </a-marker>
 
@@ -113,7 +112,7 @@
 
     <!-- add a simple camera plus crosshairs -->
     <a-entity camera>
-      <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1"
+      <a-entity id="camera" cursor="fuse: true; fuseTimeout: 1000" position="0 0 -1"
         geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.022" material="color: yellow; shader: flat">
       </a-entity>
     </a-entity>
@@ -124,7 +123,32 @@
 
   </div>
 
+  <div class="result-overlay">
+
+      <div id="man-group1" class="result-overlay-children">
+        <ul id="list-1" class="nobull">
+
+        </ul>
+      </div>
+      <div class="result-overlay-children text">
+          <h1 id="answer">50%</h1>
+          <h4>Correct data from GGD</h4>
+      </div>
+      <div id="man-group2" class="result-overlay-children">
+          <ul id="list-2" class="nobull">
+
+            </ul>
+      </div>
+      <div class="result-overlay-children text">
+          <h1>20%</h1>
+          <h4>What people think from this poll</h4>
+      </div>
+
+
+  </div>
   <div id="gui">
+
+
 
 
     <div class="bullet">

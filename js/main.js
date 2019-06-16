@@ -2,7 +2,7 @@ let globalManRef = {};
 let globalManState = {};
 let globalID = -1;
 let prevID = -1;
-
+let isActive = false;
 
 
 let questions = {
@@ -11,7 +11,8 @@ let questions = {
     where: "Living in South East",
     line1: "How many experience",
     line2: "social exclusion?",
-    line3: " "
+    line3: " ",
+    answer: 18.3
   },
   newwest: {
     title: "100 Teens",
@@ -19,7 +20,9 @@ let questions = {
     where: "Living in New-West",
     line1: "How many teens ",
     line2: "work out often?",
-    line3: ""
+    line3: "",
+    answer: 42.3
+
   },
   east: {
     title: "100 Adults",
@@ -28,7 +31,9 @@ let questions = {
 
     line1: "How many of them",
     line2: "have fallen twice or more",
-    line3: "in the past year?"
+    line3: "in the past year?",
+    answer: 18.1
+
   },
   south: {
     title: "100 Adults",
@@ -36,7 +41,9 @@ let questions = {
     where: "Living in South",
     line1: "How many of them are",
     line2: "satisfied with the green",
-    line3: "spaces in their neighbourhood?"
+    line3: "spaces in their neighbourhood?",
+    answer: 90.9
+
   },
   north: {
     title: "100 Adults",
@@ -44,7 +51,9 @@ let questions = {
     where: "Living in North",
     line1: "How many adults ",
     line2: "experience moderate or",
-    line3: "severe loneliness?"
+    line3: "severe loneliness?",
+    answer: 51.2
+
   },
   west: {
     title: "100 Adults",
@@ -52,8 +61,22 @@ let questions = {
     where: "Living in West",
     line1: "How many adults ",
     line2: "have had unprotected sex?",
-    line3: ""
+    line3: "",
+    answer: 15
+
   },
+
+  center: {
+    title: "100 Adults",
+
+    where: "Living in Centre",
+    line1: "How many of them ",
+    line2: "have had sound pollution",
+    line3: "complaints?",
+
+    answer: 43.0
+
+  }
 }
 
 let map2Index = {
@@ -62,7 +85,8 @@ let map2Index = {
   2: questions.east,
   3: questions.west,
   4: questions.newwest,
-  5: questions.southeast
+  5: questions.southeast,
+  6: questions.center
 }
 
 // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav). 
@@ -77,17 +101,15 @@ const targetElement2 = document.querySelector(".container");
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1Pxpuoz8DglBbYWpyB9rXbIVAKvkhcC9j913MBdMjJAw/edit?usp=sharing';
 
 function init() {
-  Tabletop.init({
-    key: publicSpreadsheetUrl,
-    callback: showInfo,
-    simpleSheet: true
-  })
+
   bodyScrollLock.disableBodyScroll(targetElement);
   bodyScrollLock.disableBodyScroll(targetElement2);
 
   $('#gui').hide();
-  $('#show-submitted-text').fadeOut()
+  $('#result-overlay').hide();
 
+  $('#show-submitted-text').fadeOut()
+  $('.result-overlay').fadeOut();
   setTimeout(function () {
     // Hide the address bar!
     window.scrollTo(0, 10)
@@ -107,8 +129,21 @@ function init() {
     $('#mobile-portrait').hide();
 
   }
-  
 
+  // Create result overlay
+
+  for(let i=0; i<10; i++) {
+    let man = `<li><span id="man-A-${10-i}" style="font-size: 4vh; width: 4vh; color: rgb(40,40,100);">
+                  <i class="fas fa-male"></i>
+              </span></li>`
+    let man2 = `<li><span id="man-B-${10-i}" style="font-size: 4vh; width: 4vh; color: rgb(40,40,100);">
+        <i class="fas fa-male"></i>
+    </span></li>`
+    $('#list-1').append(man)
+    $('#list-2').append(man)
+
+  }
+  
 
 }
 
@@ -135,29 +170,29 @@ window.addEventListener("orientationchange", () => {
 
 }, false);
 
-AFRAME.registerComponent('oneman-graph', {
-  schema: {
-    message: {type: 'string', default: 'Hello, World!'},
-    color: {type: 'color', default: '#aa0000'},
-    index: {type: 'number', default: 1},
+// AFRAME.registerComponent('oneman-graph', {
+//   schema: {
+//     message: {type: 'string', default: 'Hello, World!'},
+//     color: {type: 'color', default: '#aa0000'},
+//     index: {type: 'number', default: 1},
  
-  }, 
-  init: function () {
-    this.el.addEventListener('model-loaded', () => {
+//   }, 
+//   init: function () {
+//     this.el.addEventListener('model-loaded', () => {
 
 
-    })
-  },
-  update: function () {
-    console.log(this.data);
-    const obj = this.el.getObject3D('mesh');
-    obj.children.forEach((element, index) => {
-      if(index < this.data) {
-        element.setAttribute("color", this.data.color);
-      }
-    })
-  }
-});
+//     })
+//   },
+//   update: function () {
+//     console.log(this.data);
+//     const obj = this.el.getObject3D('mesh');
+//     obj.children.forEach((element, index) => {
+//       if(index < this.data) {
+//         element.setAttribute("color", this.data.color);
+//       }
+//     })
+//   }
+// });
 
 
 

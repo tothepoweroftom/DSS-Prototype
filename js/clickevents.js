@@ -7,39 +7,37 @@ let sliderBuffer = [];
 AFRAME.registerComponent('cursor-listener', {
   init: function () {
     var lastIndex = -1;
-    $('#submit').fadeOut();
 
 
     var COLORS = ['red', 'green', 'blue'];
     this.el.addEventListener('click', function (evt) {
 
-      lastIndex = (lastIndex + 1) % COLORS.length;
-
-      this.setAttribute('material', 'color', 'red');
-
-      setTimeout(() => {
-        this.setAttribute('material', 'color', 'yellow');
-
-      }, 1000)
-      let id = evt.target.id
-      globalID = id;
-
-      document.getElementById('marker-'+globalID).children.namedItem(`graph-${globalID}`).setAttribute('visible', true);
-      setSlider();
+      if(isActive === false) {
+        isActive = true;
+        $('#submit').fadeOut();
 
 
-      if(prevID != -1 && globalID!=prevID) {
-        document.getElementById('marker-'+prevID).children.namedItem(`graph-${prevID}`).setAttribute('visible', false);
+
+        let id = evt.target.id
+        globalID = id;
+  
+
+        document.getElementById('marker-'+globalID).children.namedItem(`graph-${globalID}`).setAttribute('visible', true);
+        setSlider();
 
 
+        if(prevID != -1 && globalID!=prevID) {
+          document.getElementById('marker-'+prevID).children.namedItem(`graph-${prevID}`).setAttribute('visible', false);
+
+
+        }
+
+        prevID = globalID
       }
-
-      prevID = globalID
-
 
 
     });
-
+  
 
   }
 });
@@ -81,20 +79,41 @@ function handleTouchEnd(event) {
 
   $('#submit').fadeIn();
   setTimeout(() => {
+    $('#gui').fadeOut();
 
-    $('#show-submitted-text').fadeIn().delay(2000).fadeOut();
+    //set the data
+    $('#answer').html(`${map2Index[globalID].answer}%`)
+    let answer = Math.round(map2Index[globalID].answer/10)
+    for(let i=0; i<10; i++) {
+      if(i<answer) {
+        $(`#man-A-${10-i}`).css({'color': '#ffe600'})
+      } else {
+        $(`#man-A-${10-i}`).css({'color': '#282864'})
 
-    $('#submit').fadeOut();
-    setSlider();
+      }
+    }
     document.getElementById('marker-'+globalID).children.namedItem(`graph-${globalID}`).setAttribute('visible', false);
+
+    $('.result-overlay').fadeIn();
+    document.getElementById('camera').setAttribute('visible', false);
+    setTimeout(()=>{
+      isActive = false;
+      $('.result-overlay').fadeOut();
+      document.getElementById('camera').setAttribute('visible', true);
+
+    }, 5000)
+    $('#submit').fadeOut();
 
 
   }, 3000);
+
+ 
 
 
 }
 
 function setSlider() {
+  
   $('#rs-range-line').val(0);
   $('#rs-bullet').html('0%');
   $('#rs-bullet').css({'color': `rgb(255,255,255)`})
@@ -102,7 +121,6 @@ function setSlider() {
 
 
   $('#gui').fadeIn();
-  // $('.loader').fdeOut();
 
 
   for (let i = 0; i < 100; i++) {
@@ -110,6 +128,7 @@ function setSlider() {
 
   }
  
+
 
 }
 
